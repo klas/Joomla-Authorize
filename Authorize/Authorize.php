@@ -8,10 +8,11 @@
 
 namespace Joomla\CMS\Authorize;
 
+defined('JPATH_PLATFORM') or die;
+
 use Joomla\String\StringHelper;
 use Joomla\CMS\Authorize\AuthorizeInterface;
 
-defined('JPATH_PLATFORM') or die;
 
 /**
  * Authorize class

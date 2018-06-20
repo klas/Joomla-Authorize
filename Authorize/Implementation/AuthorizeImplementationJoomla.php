@@ -10,7 +10,7 @@ namespace Joomla\CMS\Authorize\Implementation;
 
 defined('JPATH_PLATFORM') or die;
 
-use Joomla\CMS\Authorize\AbstractAuthorizeImplementation;
+use Joomla\CMS\Authorize\Implementation\AbstractAuthorizeImplementation;
 use Joomla\CMS\Authorize\AuthorizeInterface;
 use Joomla\CMS\Authorize\AuthorizeHelper;
 use Joomla\CMS\Table\Table;
