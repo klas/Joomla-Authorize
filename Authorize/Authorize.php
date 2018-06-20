@@ -20,7 +20,6 @@ defined('JPATH_PLATFORM') or die;
  */
 final class Authorize implements AuthorizeInterface
 {
-	private static $instance = null;
 
 	/**
 	 * Implementation object
