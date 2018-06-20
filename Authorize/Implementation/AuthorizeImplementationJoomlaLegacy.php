@@ -8,13 +8,15 @@
 
 namespace Joomla\CMS\Authorize\Implementation;
 
+defined('JPATH_PLATFORM') or die;
+
 use Joomla\CMS\Authorize\AuthorizeInterface;
 use Joomla\CMS\Authorize\AuthorizeHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Access\Rules;
 
 
-defined('JPATH_PLATFORM') or die;
+
 
 /**
  * Joomla Legacy authorization implementation
