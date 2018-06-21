@@ -581,60 +581,6 @@ class AuthorizeImplementationJoomla extends AbstractAuthorizeImplementation impl
 		$this->authorizationMatrix = $authorizationMatrix;
 	}
 
-	/** Inject permissions filter in the database object
-	 *
-	 * @param   \JDatabaseQuery  &$query      Database query object to append to
-	 * @param   string           $joincolumn  Name of the database column used for join ON
-	 * @param   string           $action      The name of the action to authorise.
-	 * @param   string           $orWhere     Appended to generated where condition with OR clause.
-	 * @param   array            $groups      Array of group ids to get permissions for
-	 *
-	 * @return  mixed database query object or false if this function is not implemented
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
-	public function appendFilterQuery(\JDatabaseQuery &$query, $joincolumn, $action, $orWhere = null, $groups = null)
-	{
-		if (!isset($groups))
-		{
-			$groups = \JFactory::getUser()->getAuthorisedGroups();
-		}
-
-		$query->select('ass.id AS assid, bs.id AS bssid, p.permission, p.value, p.ugroup');
-		$query->innerJoin('#__assets AS ass ON ass.id = ' . $joincolumn);
-
-		// If we want the rules cascading up to the global asset node we need a self-join.
-		$query->innerJoin('#__assets AS bs');
-		$query->where('ass.lft BETWEEN bs.lft AND bs.rgt');
-
-		// Join permissions table
-		$conditions = 'ON bs.id = p.assetid ';
-
-		if (isset($groups))
-		{
-			$conditions .= ' AND ' . $this->assetGroupQuery($groups);
-		}
-
-		$conditions .= ' AND p.permission = ' . $this->db->quote($action) . ' ';
-		$query->innerJoin('#__permissions AS p ' . $conditions);
-
-		// Magic
-		$basicwhere = 'p.permission = ' . $this->db->quote($action) . ' AND p.value=1';
-
-		if (isset($orWhere))
-		{
-			$basicwhere = '(' . $basicwhere . ' OR ' . $orWhere . ')';
-		}
-
-		$query->where($basicwhere);
-
-		$query->where('bs.level = (SELECT max(fs.level) FROM #__assets AS fs
-  							LEFT JOIN #__permissions AS pr
- 							ON fs.id = pr.assetid 
- 						 	WHERE (ass.lft BETWEEN fs.lft AND fs.rgt) AND pr.permission = ' . $this->db->quote($action) . ')');
-
-		return $query;
-	}
 
 	/**
 	 * Check if any group has core.admin permission

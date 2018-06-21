@@ -253,6 +253,7 @@ class AuthorizeImplementationJoomlaLegacy extends AuthorizeImplementationJoomla 
 		*/
 
 		$assetid = $this->assetId;
+
 		static $overLimit = false;
 
 		if ($overLimit || count($this->assetId) > $this->optimizeLimit)
